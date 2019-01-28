@@ -1,0 +1,6 @@
+.idea
+**/.pyc
+**/.*~
+*.*~
+extractxt.egg-*
+**/__pycache__
