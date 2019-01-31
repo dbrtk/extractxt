@@ -1,28 +1,23 @@
-
-import os
+import json
 import tempfile
 import uuid
 
 from django.http import HttpResponseRedirect, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 import requests
 
-from ...config import (ALLOWED_CONTENT_TYPES,
-                       CORPUS_ENDPOINT, CREATE_CORPUS_ENDPOINT)
+from ...config import (
+    ALLOWED_CONTENT_TYPES, CORPUS_ENDPOINT, CORPUS_DATA_ENDPOINT,
+    CREATE_CORPUS_ENDPOINT, DEFAULT_ENCODING, EXPECTED_FILES_ENDPOINT)
 from ...task import process_files
 
-# Create your views here.
 
-
-def upload_files_corpus(request):
-
-    pass
-
-
+@csrf_exempt
 def upload_files(request):
 
-    the_name = request.POST.get('name')
-    encoding = request.POST.get('encoding', 'utf-8')
-    corpusid = request.POST.get('id', None)
+    req_obj = request.POST.dict()
+    the_name = req_obj.get('name')
+    corpusid = req_obj.get('corpusid', None)
 
     file_objects = []
     for _file in request.FILES.getlist('files'):
@@ -32,7 +27,7 @@ def upload_files(request):
             'file_name': _file.name,
             'unique_id': uuid.uuid4().hex,
             'content_type': _file.content_type,
-            'charset': _file.charset
+            'charset': _file.charset or DEFAULT_ENCODING
         }
         with tempfile.NamedTemporaryFile(delete=False) as outf:
             file_data['tmp_file'] = outf.name
@@ -40,9 +35,12 @@ def upload_files(request):
                 outf.write(line)
         file_objects.append(file_data)
     if corpusid:
-        resp = {}
-        corpusid = ''
-        corpus_files_path = ''
+        requests.post(EXPECTED_FILES_ENDPOINT, data={
+            'corpusid': corpusid, 'file_objects': json.dumps(file_objects)})
+        resp = requests.get(
+            CORPUS_DATA_ENDPOINT, params={'corpusid': corpusid})
+        resp = resp.json()
+        corpus_files_path = resp.get('corpus_files_path')
     else:
         resp = requests.post(
             CREATE_CORPUS_ENDPOINT,

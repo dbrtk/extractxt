@@ -26,6 +26,10 @@ RMXBOT_CELERY_BACKEND = 'redis://localhost:6379/0'
 CREATE_CORPUS_ENDPOINT = '{}/corpus/create-from-upload/'.format(
     RMXBOT_ENDPOINT)
 
+CORPUS_DATA_ENDPOINT = '{}/corpus/corpus-data/'.format(RMXBOT_ENDPOINT)
+
+EXPECTED_FILES_ENDPOINT = '{}/corpus/expected-files/'.format(RMXBOT_ENDPOINT)
+
 CORPUS_ENDPOINT = '{}/corpus/'.format(RMXBOT_ENDPOINT)
 
 CREATE_DATA_ENDPOINT = '{}/data/create-from-file/'.format(RMXBOT_ENDPOINT)
@@ -39,3 +43,5 @@ ALLOWED_CONTENT_TYPES = [
     'text/plain',
 ]
 
+
+DEFAULT_ENCODING = 'utf8'

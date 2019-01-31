@@ -2,11 +2,10 @@
 import os
 import shutil
 
-from celery import Celery, shared_task
+from celery import shared_task
 import requests
 
-from .config import (CREATE_DATA_ENDPOINT, RMXBOT_CELERY_BACKEND,
-                     RMXBOT_CELERY_BROKER, TEXT_EXTRACT_CALLBACK)
+from .config import (CREATE_DATA_ENDPOINT, TEXT_EXTRACT_CALLBACK)
 from .frompdf import extract_from_pdf
 
 
@@ -15,10 +14,6 @@ CONTENT_TYPES = {
     'txt': 'text/plain',
 }
 
-rmxweb_celery_app = Celery('rmxweb_celery',
-                           broker=RMXBOT_CELERY_BROKER,
-                           backend=RMXBOT_CELERY_BACKEND
-                           )
 
 @shared_task(bind=True)
 def process_files(self, corpusid: str = None, corpus_files_path: str = None,
