@@ -40,6 +40,7 @@ def extract_from_file(self,
                       tmp_file: str = None,
                       content_type: str = None,
                       file_name: str = None,
+                      charset: str = None,
                       **_):
 
     if content_type == CONTENT_TYPES.get('pdf'):
@@ -55,6 +56,7 @@ def extract_from_file(self,
         'corpus_files_path': corpus_files_path,
         'filename': file_name,
         'content_type': content_type,
+        'charset': charset,
 
         'tmp_path': resp.get('tmp_path'),
         'file_path': resp.get('file_path'),
@@ -76,6 +78,7 @@ def extract_callback(self, kwds: dict = None):
             'file_name': kwds.get('filename'),
             'content_type': kwds.get('content_type'),
             'stdout': kwds.get('stdout'),
+            'charset': kwds.get('charset'),
         },
         files={'file': open(kwds.get('file_path'), 'rb')}
     )
