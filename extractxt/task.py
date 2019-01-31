@@ -5,7 +5,8 @@ import shutil
 from celery import Celery, shared_task
 import requests
 
-from .config import (CREATE_DATA_ENDPOINT, RMXBOT_CELERY_BACKEND, RMXBOT_CELERY_BROKER)
+from .config import (CREATE_DATA_ENDPOINT, RMXBOT_CELERY_BACKEND,
+                     RMXBOT_CELERY_BROKER, TEXT_EXTRACT_CALLBACK)
 from .frompdf import extract_from_pdf
 
 
@@ -65,7 +66,7 @@ def extract_from_file(self,
 @shared_task(bind=True)
 def extract_callback(self, kwds: dict = None):
 
-    requests.post(
+    resp = requests.post(
         CREATE_DATA_ENDPOINT,
         data={
             'corpusid': kwds.get('corpusid'),
@@ -78,17 +79,20 @@ def extract_callback(self, kwds: dict = None):
         },
         files={'file': open(kwds.get('file_path'), 'rb')}
     )
+    resp = resp.json()
 
     shutil.rmtree(kwds.get('tmp_path'))
     if os.path.isdir(kwds.get('tmp_path')):
         raise RuntimeError(kwds.get('tmp_path'))
-    # requests.post(
-    #
-    #     data={
-    #         corpus
-    #     }
-    # )
-    # rmxweb_celery_app.send_task()
 
-
-
+    requests.post(
+        TEXT_EXTRACT_CALLBACK,
+        data={
+            'corpusid': kwds.get('corpusid'),
+            'unique_id': kwds.get('unique_id'),
+            'data_id': resp.get('data_id'),
+            'file_path': resp.get('file_path'),
+            'file_name': resp.get('file_name'),
+            'file_id': resp.get('file_id')
+        }
+    )

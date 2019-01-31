@@ -30,8 +30,7 @@ CORPUS_ENDPOINT = '{}/corpus/'.format(RMXBOT_ENDPOINT)
 
 CREATE_DATA_ENDPOINT = '{}/data/create-from-file/'.format(RMXBOT_ENDPOINT)
 
-
-FILE_EXTRACTION_CALLBACK = "{}/corpus/file-extract-callback/".format(
+TEXT_EXTRACT_CALLBACK = "{}/corpus/file-extract-callback/".format(
     RMXBOT_ENDPOINT)
 
 
