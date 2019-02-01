@@ -8,6 +8,8 @@ BIN_PATH = os.path.join(os.path.dirname(BASE_DIR), 'bin')
 
 PDFTOTEXT_SCRIPT = os.path.join(BIN_PATH, 'pdftotext.sh')
 
+PROCESS_TXT_SCRIPT = os.path.join(BIN_PATH, 'processtxt.sh')
+
 DEFAULT_DPI = 300
 
 TMP_PATH = os.path.join(str(pathlib.Path.home()), 'Data', 'tmp')

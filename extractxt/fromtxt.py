@@ -1,26 +1,21 @@
-
 import os
 import shlex
 import subprocess
 
-from .config import (DEFAULT_DPI, LANGUAGE, PDFTOTEXT_FILE_PREFIX,
-                     PDFTOTEXT_SCRIPT, TMP_PATH)
+from .config import PROCESS_TXT_SCRIPT, TMP_PATH
 
 
-def extract_from_pdf(pdf_path: str = None, unique_id: str = None):
+def process_text(file_path: str = None, unique_id: str = None):
 
     tmp_path = os.path.join(TMP_PATH, unique_id)
     os.mkdir(tmp_path)
 
     results = subprocess.run(
-        shlex.split("sh {} -f {} -t {} -o {} --dpi {} --language {} --prefix {}".format(
-            PDFTOTEXT_SCRIPT,
-            pdf_path,
+        shlex.split("sh {} -f {} -t {} -o {}".format(
+            PROCESS_TXT_SCRIPT,
+            file_path,
             tmp_path,
             unique_id,
-            DEFAULT_DPI,
-            LANGUAGE,
-            PDFTOTEXT_FILE_PREFIX
         )),
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,

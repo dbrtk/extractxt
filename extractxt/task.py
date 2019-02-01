@@ -7,6 +7,7 @@ import requests
 
 from .config import (CREATE_DATA_ENDPOINT, TEXT_EXTRACT_CALLBACK)
 from .frompdf import extract_from_pdf
+from .fromtxt import process_text
 
 
 CONTENT_TYPES = {
@@ -41,7 +42,7 @@ def extract_from_file(self,
     if content_type == CONTENT_TYPES.get('pdf'):
         resp = extract_from_pdf(tmp_file, unique_id)
     elif content_type == CONTENT_TYPES.get('txt'):
-        resp = {}
+        resp = process_text(tmp_file, unique_id)
     else:
         raise TypeError(content_type)
 
