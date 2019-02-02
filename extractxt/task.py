@@ -79,19 +79,17 @@ def extract_callback(self, kwds: dict = None):
         files={'file': open(kwds.get('file_path'), 'rb')}
     )
     resp = resp.json()
-
     shutil.rmtree(kwds.get('tmp_path'))
-    if os.path.isdir(kwds.get('tmp_path')):
-        raise RuntimeError(kwds.get('tmp_path'))
 
-    requests.post(
-        TEXT_EXTRACT_CALLBACK,
-        data={
-            'corpusid': kwds.get('corpusid'),
-            'unique_id': kwds.get('unique_id'),
-            'data_id': resp.get('data_id'),
-            'file_path': resp.get('file_path'),
-            'file_name': resp.get('file_name'),
-            'file_id': resp.get('file_id')
-        }
-    )
+    if resp.get('success'):
+        requests.post(
+            TEXT_EXTRACT_CALLBACK,
+            data={
+                'corpusid': kwds.get('corpusid'),
+                'unique_id': kwds.get('unique_id'),
+                'data_id': resp.get('data_id'),
+                'file_path': resp.get('file_path'),
+                'file_name': resp.get('file_name'),
+                'file_id': resp.get('file_id')
+            }
+        )
