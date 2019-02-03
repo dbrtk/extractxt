@@ -50,8 +50,8 @@ for i in $target_dir/*ppm; do
     tesseract $tifile -l $language $filename && rm $tifile
 
     cat "$filename.txt" |
-	tr '\n' ' ' |
-	tr -s ' ' |
+    tr '\t\n\v\r' ' ' |
+    tr -s ' ' |
 	sed 's/\([.!?]\)[[:space:]]\([[:upper:][:punct:][:digit:]]\)/\1\n\2/g' >> "$out.txt"
 
     # cat "$filename.txt" >> $out && rm "$filename.txt";
