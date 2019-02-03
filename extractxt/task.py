@@ -81,15 +81,16 @@ def extract_callback(self, kwds: dict = None):
     resp = resp.json()
     shutil.rmtree(kwds.get('tmp_path'))
 
-    if resp.get('success'):
-        requests.post(
-            TEXT_EXTRACT_CALLBACK,
-            data={
-                'corpusid': kwds.get('corpusid'),
-                'unique_id': kwds.get('unique_id'),
-                'data_id': resp.get('data_id'),
-                'file_path': resp.get('file_path'),
-                'file_name': resp.get('file_name'),
-                'file_id': resp.get('file_id')
-            }
-        )
+    requests.post(TEXT_EXTRACT_CALLBACK, data={
+        'success': True,
+        'corpusid': kwds.get('corpusid'),
+        'unique_id': kwds.get('unique_id'),
+        'data_id': resp.get('data_id'),
+        'file_path': resp.get('file_path'),
+        'file_name': resp.get('file_name'),
+        'file_id': resp.get('file_id')
+    } if resp.get('success') else {
+        'success': False,
+        'corpusid': kwds.get('corpusid'),
+        'unique_id': kwds.get('unique_id')
+    })
