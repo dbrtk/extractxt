@@ -8,7 +8,8 @@ import requests
 
 from ...config import (
     ALLOWED_CONTENT_TYPES, CORPUS_ENDPOINT, CORPUS_DATA_ENDPOINT,
-    CREATE_CORPUS_ENDPOINT, DEFAULT_ENCODING, EXPECTED_FILES_ENDPOINT)
+    CORPUS_STATUS, CREATE_CORPUS_ENDPOINT, DEFAULT_ENCODING,
+    EXPECTED_FILES_ENDPOINT)
 from ...task import process_files
 
 
@@ -34,6 +35,13 @@ def upload_files(request):
             for line in _file.readlines():
                 outf.write(line)
         file_objects.append(file_data)
+    if not file_objects:
+        return JsonResponse({
+            'success': False,
+            'error': True,
+            'msg': 'Only the following content-types are supported:%r'
+                     % ALLOWED_CONTENT_TYPES
+        })
     if corpusid:
         requests.post(EXPECTED_FILES_ENDPOINT, data={
             'corpusid': corpusid, 'file_objects': json.dumps(file_objects)})
@@ -41,6 +49,7 @@ def upload_files(request):
             CORPUS_DATA_ENDPOINT, params={'corpusid': corpusid})
         resp = resp.json()
         corpus_files_path = resp.get('corpus_files_path')
+        status = CORPUS_STATUS['upload']
     else:
         resp = requests.post(
             CREATE_CORPUS_ENDPOINT,
@@ -48,11 +57,13 @@ def upload_files(request):
         resp = resp.json()
         corpusid = resp.get('corpusid')
         corpus_files_path = resp.get('corpus_files_path')
+        status = CORPUS_STATUS['new']
 
     process_files.delay(corpusid=corpusid,
                         corpus_files_path=corpus_files_path,
                         file_objects=file_objects)
-    return HttpResponseRedirect('{}{}/'.format(CORPUS_ENDPOINT, corpusid))
+    return HttpResponseRedirect(
+        '{}{}/?status={}'.format(CORPUS_ENDPOINT, corpusid, status))
 
 
 def home(request):

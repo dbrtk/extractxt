@@ -34,6 +34,11 @@ EXPECTED_FILES_ENDPOINT = '{}/corpus/expected-files/'.format(RMXBOT_ENDPOINT)
 
 CORPUS_ENDPOINT = '{}/corpus/'.format(RMXBOT_ENDPOINT)
 
+CORPUS_STATUS = {
+    'new': 'newly-created',
+    'upload': 'file-upload',
+}
+
 CREATE_DATA_ENDPOINT = '{}/data/create-from-file/'.format(RMXBOT_ENDPOINT)
 
 TEXT_EXTRACT_CALLBACK = "{}/corpus/file-extract-callback/".format(
