@@ -1,5 +1,4 @@
 
-import os
 import shutil
 
 from celery import shared_task
