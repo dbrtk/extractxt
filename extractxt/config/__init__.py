@@ -1,6 +1,5 @@
 
 import os
-import pathlib
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -12,18 +11,16 @@ PROCESS_TXT_SCRIPT = os.path.join(BIN_PATH, 'processtxt.sh')
 
 DEFAULT_DPI = 300
 
-TMP_PATH = os.path.join(str(pathlib.Path.home()), 'Data', 'tmp')
+# TMP_PATH = os.path.join(str(pathlib.Path.home()), 'Data', 'tmp')
+TMP_PATH = os.environ.get('TMP_DIR_PATH')
 
 LANGUAGE = 'eng'
 
 PDFTOTEXT_FILE_PREFIX = 'file'
 
 # rmxbot
-RMXBOT_ENDPOINT = 'http://localhost:8000'
-
-# celery broker and backend on rmxweb
-RMXBOT_CELERY_BROKER = 'redis://localhost:6379/0'
-RMXBOT_CELERY_BACKEND = 'redis://localhost:6379/0'
+# RMXBOT_ENDPOINT = 'http://localhost:8000'
+RMXBOT_ENDPOINT = os.environ.get('RMXBOT_ENDPOINT')
 
 CREATE_CORPUS_ENDPOINT = '{}/corpus/create-from-upload/'.format(
     RMXBOT_ENDPOINT)
