@@ -1,5 +1,5 @@
 
 celery
-redis
+redis==2.10.6
 Django
 requests
