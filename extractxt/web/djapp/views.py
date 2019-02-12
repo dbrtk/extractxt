@@ -1,5 +1,4 @@
 import json
-import os
 import tempfile
 import uuid
 
@@ -36,8 +35,6 @@ def upload_files(request):
             for line in _file.readlines():
                 outf.write(line)
         file_objects.append(file_data)
-        print(os.path.exists(file_data['tmp_file']))
-    print(file_objects)
     if not file_objects:
         return JsonResponse({
             'success': False,
