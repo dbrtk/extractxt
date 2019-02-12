@@ -11,7 +11,6 @@ PROCESS_TXT_SCRIPT = os.path.join(BIN_PATH, 'processtxt.sh')
 
 DEFAULT_DPI = 300
 
-# TMP_PATH = os.path.join(str(pathlib.Path.home()), 'Data', 'tmp')
 TMP_PATH = os.environ.get('TMP_DIR_PATH')
 
 LANGUAGE = 'eng'
@@ -19,7 +18,6 @@ LANGUAGE = 'eng'
 PDFTOTEXT_FILE_PREFIX = 'file'
 
 # rmxbot
-# RMXBOT_ENDPOINT = 'http://localhost:8000'
 RMXBOT_ENDPOINT = os.environ.get('RMXBOT_ENDPOINT')
 RMXBOT_ENDPOINT_PUBLIC = os.environ.get('RMXBOT_ENDPOINT_PUBLIC')
 
