@@ -20,7 +20,8 @@ PDFTOTEXT_FILE_PREFIX = 'file'
 
 # rmxbot
 # RMXBOT_ENDPOINT = 'http://localhost:8000'
-RMXBOT_ENDPOINT = os.environ.get('RMXBOT_ENDPOINT_PUBLIC')
+RMXBOT_ENDPOINT = os.environ.get('RMXBOT_ENDPOINT')
+RMXBOT_ENDPOINT_PUBLIC = os.environ.get('RMXBOT_ENDPOINT_PUBLIC')
 
 CREATE_CORPUS_ENDPOINT = '{}/corpus/create-from-upload/'.format(
     RMXBOT_ENDPOINT)
@@ -29,7 +30,8 @@ CORPUS_DATA_ENDPOINT = '{}/corpus/corpus-data/'.format(RMXBOT_ENDPOINT)
 
 EXPECTED_FILES_ENDPOINT = '{}/corpus/expected-files/'.format(RMXBOT_ENDPOINT)
 
-CORPUS_ENDPOINT = '{}/corpus/'.format(RMXBOT_ENDPOINT)
+# CORPUS_ENDPOINT = '{}/corpus/'.format(RMXBOT_ENDPOINT)
+CORPUS_ENDPOINT = '{}/corpus/'.format(RMXBOT_ENDPOINT_PUBLIC)
 
 CORPUS_STATUS = {
     'new': 'newly-created',
