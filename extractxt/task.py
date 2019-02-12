@@ -38,6 +38,8 @@ def extract_from_file(self,
                       charset: str = None,
                       **_):
 
+    print(tmp_file)
+
     if content_type == CONTENT_TYPES.get('pdf'):
         resp = extract_from_pdf(tmp_file, unique_id)
     elif content_type == CONTENT_TYPES.get('txt'):
@@ -63,8 +65,8 @@ def extract_from_file(self,
 @shared_task(bind=True)
 def extract_callback(self, kwds: dict = None):
 
+    print(kwds)
     print(kwds.get('file-path'))
-    print(os.path.exists(kwds.get('file-path')))
 
     resp = requests.post(
         CREATE_DATA_ENDPOINT,
