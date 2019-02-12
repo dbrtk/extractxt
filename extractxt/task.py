@@ -1,4 +1,4 @@
-
+import os
 import shutil
 
 from celery import shared_task
@@ -62,6 +62,9 @@ def extract_from_file(self,
 
 @shared_task(bind=True)
 def extract_callback(self, kwds: dict = None):
+
+    print(kwds.get('file-path'))
+    print(os.path.exists(kwds.get('file-path')))
 
     resp = requests.post(
         CREATE_DATA_ENDPOINT,
