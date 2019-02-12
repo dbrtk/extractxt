@@ -20,7 +20,7 @@ PDFTOTEXT_FILE_PREFIX = 'file'
 
 # rmxbot
 # RMXBOT_ENDPOINT = 'http://localhost:8000'
-RMXBOT_ENDPOINT = os.environ.get('RMXBOT_ENDPOINT')
+RMXBOT_ENDPOINT = os.environ.get('RMXBOT_ENDPOINT_PUBLIC')
 
 CREATE_CORPUS_ENDPOINT = '{}/corpus/create-from-upload/'.format(
     RMXBOT_ENDPOINT)
