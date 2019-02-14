@@ -1,4 +1,5 @@
 import json
+import os
 import tempfile
 import uuid
 
@@ -22,35 +23,30 @@ def upload_files(request):
     corpusid = req_obj.get('corpusid', None)
 
     file_objects = []
-    wrong_files = []
     for _file in request.FILES.getlist('files'):
-        content_type = filetype.guess(_file.name).mime
 
-        if _file.content_type not in ALLOWED_CONTENT_TYPES:
-
-            wrong_files.append({
-                'file_name': _file.name,
-                'django_content_type': _file.content_type,
-                'content_type': content_type,
-            })
-            continue
         file_data = {
             'file_name': _file.name,
             'unique_id': uuid.uuid4().hex,
-            'content_type': _file.content_type,
+            # 'content_type': _file.content_type,
             'charset': _file.charset or DEFAULT_ENCODING
         }
         with tempfile.NamedTemporaryFile(delete=False) as outf:
             file_data['tmp_file'] = outf.name
             for line in _file.readlines():
                 outf.write(line)
+        ctype = filetype.guess(file_data['tmp_file'])
+        file_data['content_type'] = ctype
+
+        if ctype not in ALLOWED_CONTENT_TYPES:
+            os.remove(file_data['tmp_file'])
+            continue
 
         file_objects.append(file_data)
     if not file_objects:
         return JsonResponse({
             'success': False,
             'error': True,
-            'files': wrong_files,
             'msg': 'Only the following content-types are supported:%r'
                      % ALLOWED_CONTENT_TYPES
         })
