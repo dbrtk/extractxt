@@ -4,6 +4,7 @@ import uuid
 
 from django.http import HttpResponseRedirect, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+import filetype
 import requests
 
 from ...config import (
@@ -22,6 +23,10 @@ def upload_files(request):
 
     file_objects = []
     for _file in request.FILES.getlist('files'):
+        content_type = filetype.guess(_file.name).mime
+
+        print('{} - {}'.format(_file.content_type, content_type))
+
         if _file.content_type not in ALLOWED_CONTENT_TYPES:
             continue
         file_data = {
@@ -34,6 +39,7 @@ def upload_files(request):
             file_data['tmp_file'] = outf.name
             for line in _file.readlines():
                 outf.write(line)
+
         file_objects.append(file_data)
     if not file_objects:
         return JsonResponse({
@@ -62,6 +68,7 @@ def upload_files(request):
     print('file upload')
     for i in file_objects:
         print(i)
+
     process_files.delay(corpusid=corpusid,
                         corpus_files_path=corpus_files_path,
                         file_objects=file_objects)
