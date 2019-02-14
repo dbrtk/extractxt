@@ -41,14 +41,15 @@ def upload_files(request):
         ctype = filetype.guess(file_data['tmp_file']).mime
         file_data['content_type'] = ctype
 
-        import pdb; pdb.set_trace()
-
         if ctype not in ALLOWED_CONTENT_TYPES:
             not_allowed.append(file_data)
             os.remove(file_data['tmp_file'])
             continue
 
         file_objects.append(file_data)
+
+    import pdb; pdb.set_trace()
+
     if not file_objects:
         return JsonResponse({
             'success': False,
