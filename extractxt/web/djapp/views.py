@@ -23,6 +23,7 @@ def upload_files(request):
     corpusid = req_obj.get('corpusid', None)
 
     file_objects = []
+    not_allowed = []
     for _file in request.FILES.getlist('files'):
 
         file_data = {
@@ -40,6 +41,7 @@ def upload_files(request):
         file_data['content_type'] = ctype
 
         if ctype not in ALLOWED_CONTENT_TYPES:
+            not_allowed.append(file_data)
             os.remove(file_data['tmp_file'])
             continue
 
@@ -48,6 +50,7 @@ def upload_files(request):
         return JsonResponse({
             'success': False,
             'error': True,
+            'files': not_allowed,
             'msg': 'Only the following content-types are supported:%r'
                      % ALLOWED_CONTENT_TYPES
         })
