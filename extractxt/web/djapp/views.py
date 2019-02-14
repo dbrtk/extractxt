@@ -22,12 +22,17 @@ def upload_files(request):
     corpusid = req_obj.get('corpusid', None)
 
     file_objects = []
+    wrong_files = []
     for _file in request.FILES.getlist('files'):
         content_type = filetype.guess(_file.name).mime
 
-        print('{} - {}'.format(_file.content_type, content_type))
-
         if _file.content_type not in ALLOWED_CONTENT_TYPES:
+
+            wrong_files.append({
+                'file_name': _file.name,
+                'django_content_type': _file.content_type,
+                'content_type': content_type,
+            })
             continue
         file_data = {
             'file_name': _file.name,
@@ -45,6 +50,7 @@ def upload_files(request):
         return JsonResponse({
             'success': False,
             'error': True,
+            'files': wrong_files,
             'msg': 'Only the following content-types are supported:%r'
                      % ALLOWED_CONTENT_TYPES
         })
@@ -64,10 +70,6 @@ def upload_files(request):
         corpusid = resp.get('corpusid')
         corpus_files_path = resp.get('corpus_files_path')
         status = CORPUS_STATUS['new']
-
-    print('file upload')
-    for i in file_objects:
-        print(i)
 
     process_files.delay(corpusid=corpusid,
                         corpus_files_path=corpus_files_path,
