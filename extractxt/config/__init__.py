@@ -5,9 +5,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 BIN_PATH = os.path.join(os.path.dirname(BASE_DIR), 'bin')
 
-PDFTOTEXT_SCRIPT = os.path.join(BIN_PATH, 'pdftotext.sh')
+# PDFTOTEXT_SCRIPT = os.path.join(BIN_PATH, 'pdftotext.sh')
+# PROCESS_TXT_SCRIPT = os.path.join(BIN_PATH, 'processtxt.sh')
 
-PROCESS_TXT_SCRIPT = os.path.join(BIN_PATH, 'processtxt.sh')
+PDFTOTEXT_SCRIPT = os.environ.get('PDFTOTXT_SCRIPT')
+
+PROCESS_TXT_SCRIPT = os.environ.get('PROCESSTXT_SCRIPT')
 
 DEFAULT_DPI = 300
 
