@@ -49,7 +49,7 @@ def upload_files(request):
         file_objects.append(file_data)
 
     import remote_pdb
-    remote_pdb.set_trace(host='0.0.0.0', port=8003)
+    remote_pdb.set_trace()
 
     if not file_objects:
         return JsonResponse({
