@@ -59,6 +59,9 @@ def upload_files(request):
         corpus_files_path = resp.get('corpus_files_path')
         status = CORPUS_STATUS['new']
 
+    print('file upload')
+    for i in file_objects:
+        print(i)
     process_files.delay(corpusid=corpusid,
                         corpus_files_path=corpus_files_path,
                         file_objects=file_objects)
