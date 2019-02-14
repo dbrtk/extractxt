@@ -32,6 +32,7 @@ def upload_files(request):
             # 'content_type': _file.content_type,
             'charset': _file.charset or DEFAULT_ENCODING
         }
+
         with tempfile.NamedTemporaryFile(delete=False) as outf:
             file_data['tmp_file'] = outf.name
             for line in _file.readlines():
@@ -39,6 +40,8 @@ def upload_files(request):
 
         ctype = filetype.guess(file_data['tmp_file']).mime
         file_data['content_type'] = ctype
+
+        import pdb; pdb.set_trace()
 
         if ctype not in ALLOWED_CONTENT_TYPES:
             not_allowed.append(file_data)
