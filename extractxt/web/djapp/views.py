@@ -37,6 +37,8 @@ def upload_files(request):
             file_data['tmp_file'] = outf.name
             for line in _file.readlines():
                 outf.write(line)
+        import remote_pdb
+        remote_pdb.set_trace(host='0.0.0.0', port=4444)
 
         ctype = filetype.guess(file_data['tmp_file']).mime
         file_data['content_type'] = ctype
@@ -44,12 +46,10 @@ def upload_files(request):
         if ctype not in ALLOWED_CONTENT_TYPES:
             not_allowed.append(file_data)
             os.remove(file_data['tmp_file'])
-            continue
 
-        file_objects.append(file_data)
+        else:
+            file_objects.append(file_data)
 
-    import remote_pdb
-    remote_pdb.set_trace(host='0.0.0.0', port=4444)
 
     if not file_objects:
         return JsonResponse({

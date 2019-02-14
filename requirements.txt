@@ -4,4 +4,3 @@ filetype
 redis==2.10.6
 Django
 requests
-remote-pdb
