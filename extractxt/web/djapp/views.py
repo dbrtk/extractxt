@@ -35,7 +35,8 @@ def upload_files(request):
             file_data['tmp_file'] = outf.name
             for line in _file.readlines():
                 outf.write(line)
-        ctype = filetype.guess(file_data['tmp_file'])
+
+        ctype = filetype.guess(file_data['tmp_file']).mime
         file_data['content_type'] = ctype
 
         if ctype not in ALLOWED_CONTENT_TYPES:
