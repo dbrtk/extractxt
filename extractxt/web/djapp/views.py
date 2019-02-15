@@ -1,11 +1,12 @@
 import json
 import os
+import shlex
+import subprocess
 import tempfile
 import uuid
 
 from django.http import HttpResponseRedirect, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-import filetype
 import requests
 
 from ...config import (
@@ -29,24 +30,21 @@ def upload_files(request):
         file_data = {
             'file_name': _file.name,
             'unique_id': uuid.uuid4().hex,
-            # 'content_type': _file.content_type,
             'charset': _file.charset or DEFAULT_ENCODING
         }
-
         with tempfile.NamedTemporaryFile(delete=False) as outf:
             file_data['tmp_file'] = outf.name
             for line in _file.readlines():
                 outf.write(line)
 
-        ctype = filetype.guess(file_data['tmp_file']).mime
-        file_data['content_type'] = ctype
+        ctype = get_mimetype(file_data['tmp_file'])
 
-        if ctype not in ALLOWED_CONTENT_TYPES:
+        file_data['content_type'] = ctype
+        if ctype in ALLOWED_CONTENT_TYPES:
+            file_objects.append(file_data)
+        else:
             not_allowed.append(file_data)
             os.remove(file_data['tmp_file'])
-
-        else:
-            file_objects.append(file_data)
 
     if not file_objects:
         return JsonResponse({
@@ -85,3 +83,15 @@ def home(request):
     return JsonResponse({
         'msg': "Hello world!"
     })
+
+
+def get_mimetype(path: str = None) -> str:
+    """Using the file command to retrieve the mime type of a file."""
+    result = subprocess.run(
+        shlex.split("file -b --mime-type {}".format(path)),
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        encoding="utf-8",
+        check=True,
+    )
+    return result.stdout
