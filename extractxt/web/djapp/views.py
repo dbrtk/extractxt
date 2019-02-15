@@ -94,4 +94,4 @@ def get_mimetype(path: str = None) -> str:
         encoding="utf-8",
         check=True,
     )
-    return result.stdout
+    return result.stdout.strip()
