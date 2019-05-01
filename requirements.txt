@@ -1,6 +1,6 @@
 
 celery
-redis==2.10.6
+redis
 Django
 requests
 remote-pdb
