@@ -32,13 +32,6 @@ CORPUS_STATUS = {
     'upload': 'file-upload',
 }
 
-# todo(): delete all endpoints - replace with celery
-# CREATE_DATA_ENDPOINT = '{}/data/create-from-file/'.format(RMXBOT_ENDPOINT)
-#
-# TEXT_EXTRACT_CALLBACK = "{}/corpus/file-extract-callback/".format(
-#     RMXBOT_ENDPOINT)
-
-
 
 ALLOWED_CONTENT_TYPES = [
     'application/pdf',

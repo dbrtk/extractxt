@@ -28,5 +28,5 @@ RMXBOT_TASKS = {
 
     'create_data_from_file': 'rmxbot.tasks.data.create',
 
-
 }
+

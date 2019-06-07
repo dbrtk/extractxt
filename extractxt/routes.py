@@ -3,7 +3,6 @@ import shlex
 import subprocess
 import uuid
 
-from chardet.universaldetector import UniversalDetector
 from flask import Blueprint, flash, jsonify, request, redirect
 
 from .app import celery
