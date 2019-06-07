@@ -2,19 +2,17 @@ import os
 import shlex
 import subprocess
 
-from .config.appconf import PROCESS_TXT_SCRIPT, TMP_PATH
+from .config.appconf import PROCESS_TXT_SCRIPT
 
 
-def process_text(file_path: str = None, unique_id: str = None):
-
-    tmp_path = os.path.join(TMP_PATH, unique_id)
-    os.mkdir(tmp_path)
+def process_text(file_path: str = None, unique_id: str = None,
+                 corpus_files_path: str = None):
 
     results = subprocess.run(
         shlex.split("sh {} -f {} -t {} -o {}".format(
             PROCESS_TXT_SCRIPT,
             file_path,
-            tmp_path,
+            corpus_files_path,
             unique_id,
         )),
         stdin=subprocess.PIPE,
@@ -26,6 +24,5 @@ def process_text(file_path: str = None, unique_id: str = None):
     return {
         'stdout': results.stdout,
         'returncode': results.returncode,
-        'tmp_path': tmp_path,
-        'file_path': os.path.join(tmp_path, '{}.txt'.format(unique_id))
+        'file_path': os.path.join(corpus_files_path, unique_id),
     }

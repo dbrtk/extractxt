@@ -14,7 +14,7 @@ from ...config import (
     ALLOWED_CONTENT_TYPES, CORPUS_ENDPOINT, CORPUS_DATA_ENDPOINT,
     CORPUS_STATUS, CREATE_CORPUS_ENDPOINT, DEFAULT_ENCODING,
     EXPECTED_FILES_ENDPOINT, TMP_PATH)
-from ...task import process_files
+from ...tasks import process_files
 
 
 @csrf_exempt

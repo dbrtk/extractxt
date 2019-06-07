@@ -27,6 +27,6 @@ out=$(realpath -m $target_dir/$out)
 cat "$filepath" |
     tr '\t\n\v\r' ' ' |
     tr -s ' ' |
-    sed 's/\([.!?]\)[[:space:]]\([[:upper:][:punct:][:digit:]]\)/\1\n\2/g' >> "$out.txt"
+    sed 's/\([.!?]\)[[:space:]]\([[:upper:][:punct:][:digit:]]\)/\1\n\2/g' >> "$out"
 
 exit 0

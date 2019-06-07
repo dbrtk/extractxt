@@ -4,18 +4,20 @@ import shlex
 import subprocess
 
 from .config.appconf import (DEFAULT_DPI, LANGUAGE, PDFTOTEXT_FILE_PREFIX,
-                             PDFTOTEXT_SCRIPT, TMP_PATH)
+                             PDFTOTEXT_SCRIPT, TMP_FOLDER)
 
 
-def extract_from_pdf(pdf_path: str = None, unique_id: str = None):
+def extract_from_pdf(file_path: str = None, unique_id: str = None,
+                     corpus_files_path: str = None):
 
-    tmp_path = os.path.join(TMP_PATH, unique_id)
+    tmp_path = os.path.join(TMP_FOLDER, unique_id)
     os.mkdir(tmp_path)
 
     results = subprocess.run(
-        shlex.split("sh {} -f {} -t {} -o {} --dpi {} --language {} --prefix {}".format(
+        shlex.split("sh {} -f {} -t {} -p {} -o {} --dpi {} --language {} --prefix {}".format(
             PDFTOTEXT_SCRIPT,
-            pdf_path,
+            file_path,
+            corpus_files_path,
             tmp_path,
             unique_id,
             DEFAULT_DPI,
@@ -31,6 +33,7 @@ def extract_from_pdf(pdf_path: str = None, unique_id: str = None):
     return {
         'stdout': results.stdout,
         'returncode': results.returncode,
-        'tmp_path': tmp_path,
-        'file_path': os.path.join(tmp_path, '{}.txt'.format(unique_id))
+        'file_path': os.path.join(corpus_files_path, unique_id),
+        # 'tmp_path': tmp_path,
+        # 'file_path': os.path.join(tmp_path, '{}.txt'.format(unique_id))
     }

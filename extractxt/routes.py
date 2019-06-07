@@ -3,13 +3,14 @@ import shlex
 import subprocess
 import uuid
 
+from chardet.universaldetector import UniversalDetector
 from flask import Blueprint, flash, jsonify, request, redirect
 
 from .app import celery
 from .config.appconf import (ALLOWED_CONTENT_TYPES, CORPUS_ENDPOINT,
                              CORPUS_STATUS, DEFAULT_ENCODING, UPLOAD_FOLDER)
 from .config.celeryconf import RMXBOT_TASKS
-from .task import process_files
+from .tasks import process_files
 
 
 main_app = Blueprint('rmxupload_app', __name__, root_path='/')
@@ -62,6 +63,10 @@ def upload_files():
             RMXBOT_TASKS['expected_files'],
             kwargs={'corpusid': corpusid, 'file_objects': file_objects}
         ).get()
+
+        print(resp)
+        print(type(resp))
+
         # requests.post(EXPECTED_FILES_ENDPOINT, data={
         #     'corpusid': corpusid, 'file_objects': json.dumps(file_objects)})
         # resp = requests.get(
@@ -101,3 +106,4 @@ def get_mimetype(path: str = None) -> str:
         check=True,
     )
     return result.stdout.strip()
+
