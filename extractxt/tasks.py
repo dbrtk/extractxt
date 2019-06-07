@@ -50,7 +50,7 @@ def extract_from_file(corpusid: str = None,
         celery.send_task(RMXBOT_TASKS['create_data_from_file'], kwargs={
             'corpusid': corpusid,
             'fileid': unique_id,
-            'path': path,
+            'path': resp.get('file_path'),
             'file_name': file_name,
             'encoding': get_encoding(
                 path=os.path.join(corpus_files_path, unique_id)
@@ -63,32 +63,5 @@ def extract_from_file(corpusid: str = None,
             'corpusid': corpusid,
             'file_id': unique_id,
         })
-
-
-@celery.task
-def update_corpus(corpusid: str = None,
-                  success: bool = False,
-                  data_id = None,
-                  file_id: str = None,
-                  file_name: str = None,
-                  ):
-
-    # todo(): delete!
-
-    print('update corpus after file extract')
-    print(corpusid)
-    print(data_id)
-    print(file_id)
-
-    celery.send_task(RMXBOT_TASKS['file_extract_callback'], kwargs={
-        'success': True,
-        'corpusid': corpusid,
-        'data_id': data_id,
-        'file_name': file_name,
-        'file_id': file_id,
-    } if success else {
-        'success': False,
-        'corpusid': corpusid,
-        'file_id': file_id,
-    })
-
+    if os.path.exists(path):
+        os.remove(path)

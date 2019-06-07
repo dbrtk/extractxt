@@ -24,6 +24,7 @@ def upload_files():
     file_objects = []
     not_allowed = []
     if 'file' not in request.files:
+
         flash('No file part')
         return redirect(request.url)
 
@@ -62,15 +63,6 @@ def upload_files():
             RMXBOT_TASKS['expected_files'],
             kwargs={'corpusid': corpusid, 'file_objects': file_objects}
         ).get()
-
-        print(resp)
-        print(type(resp))
-
-        # requests.post(EXPECTED_FILES_ENDPOINT, data={
-        #     'corpusid': corpusid, 'file_objects': json.dumps(file_objects)})
-        # resp = requests.get(
-        #     CORPUS_DATA_ENDPOINT, params={'corpusid': corpusid})
-        # resp = resp.json()
         corpus_files_path = resp.get('corpus_files_path')
         status = CORPUS_STATUS['upload']
     else:
@@ -78,11 +70,6 @@ def upload_files():
         resp = celery.send_task(
             RMXBOT_TASKS['create'],
             kwargs={'name': the_name, 'file_objects': file_objects}).get()
-
-        # resp = requests.post(
-        #     CREATE_CORPUS_ENDPOINT,
-        #     json={'name': the_name, 'file_objects': file_objects})
-        # resp = resp.json()
 
         corpusid = resp.get('corpusid')
         corpus_files_path = resp.get('corpus_files_path')
