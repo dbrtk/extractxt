@@ -2,7 +2,7 @@ import os
 import shlex
 import subprocess
 
-from .config import PROCESS_TXT_SCRIPT, TMP_PATH
+from .config.appconf import PROCESS_TXT_SCRIPT, TMP_PATH
 
 
 def process_text(file_path: str = None, unique_id: str = None):

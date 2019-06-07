@@ -4,7 +4,7 @@ import shutil
 from celery import shared_task
 import requests
 
-from .config import (CREATE_DATA_ENDPOINT, TEXT_EXTRACT_CALLBACK)
+from .config.appconf import CREATE_DATA_ENDPOINT, TEXT_EXTRACT_CALLBACK
 from .frompdf import extract_from_pdf
 from .fromtxt import process_text
 

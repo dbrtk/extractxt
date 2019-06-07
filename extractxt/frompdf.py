@@ -3,8 +3,8 @@ import os
 import shlex
 import subprocess
 
-from .config import (DEFAULT_DPI, LANGUAGE, PDFTOTEXT_FILE_PREFIX,
-                     PDFTOTEXT_SCRIPT, TMP_PATH)
+from .config.appconf import (DEFAULT_DPI, LANGUAGE, PDFTOTEXT_FILE_PREFIX,
+                             PDFTOTEXT_SCRIPT, TMP_PATH)
 
 
 def extract_from_pdf(pdf_path: str = None, unique_id: str = None):

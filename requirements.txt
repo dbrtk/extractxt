@@ -1,6 +1,9 @@
 
 celery
-redis==2.10.6
-Django
+
+chardet
+
+flask
+
 requests
-remote-pdb
+
