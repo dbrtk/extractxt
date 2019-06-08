@@ -22,7 +22,8 @@ os.environ['TMP_FOLDER'] = TMP_FOLDER
 os.environ['PDFTOTXT_SCRIPT'] = os.path.join(SCRIPT_FOLDER, 'pdftotext.sh')
 os.environ['PROCESSTXT_SCRIPT'] = os.path.join(SCRIPT_FOLDER, 'processtxt.sh')
 os.environ['TMP_DIR_PATH'] = TMP_FOLDER
-os.environ['RMXBOT_ENDPOINT'] = 'localhost:8000'
+
+os.environ['RMXBOT_ENDPOINT'] = 'http://localhost:8000'
 
 
 def create_app():

@@ -1,6 +1,4 @@
 import os
-import shlex
-import subprocess
 import uuid
 
 from flask import Blueprint, flash, jsonify, request, redirect
@@ -10,12 +8,13 @@ from .config.appconf import (ALLOWED_CONTENT_TYPES, CORPUS_ENDPOINT,
                              CORPUS_STATUS, DEFAULT_ENCODING, UPLOAD_FOLDER)
 from .config.celeryconf import RMXBOT_TASKS
 from .tasks import process_files
+from .utils import get_mimetype
 
 
 main_app = Blueprint('rmxupload_app', __name__, root_path='/')
 
 
-@main_app.route('/upload-files', methods=['POST'])
+@main_app.route('/upload-files', methods=['POST'], strict_slashes=False)
 def upload_files():
 
     the_name = request.form.get('name')
@@ -26,7 +25,7 @@ def upload_files():
     if 'file' not in request.files:
 
         flash('No file part')
-        return redirect(request.url)
+        return redirect(request.referrer)
 
     for _file in request.files.getlist('file'):
 
@@ -80,16 +79,3 @@ def upload_files():
                         file_objects=file_objects)
     return redirect(
         '{}{}/?status={}'.format(CORPUS_ENDPOINT, corpusid, status))
-
-
-def get_mimetype(path: str = None) -> str:
-    """Using the file command to retrieve the mime type of a file."""
-    result = subprocess.run(
-        shlex.split("file -b --mime-type {}".format(path)),
-        stdin=subprocess.PIPE,
-        stdout=subprocess.PIPE,
-        encoding="utf-8",
-        check=True,
-    )
-    return result.stdout.strip()
-

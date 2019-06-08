@@ -65,3 +65,13 @@ def extract_from_file(corpusid: str = None,
         })
     if os.path.exists(path):
         os.remove(path)
+
+
+@celery.task
+def extract_from_txt(file_path: str = None,
+                     unique_id: str = None,
+                     corpus_files_path: str = None):
+
+    resp = process_text(file_path=file_path, unique_id=unique_id,
+                        corpus_files_path=corpus_files_path)
+    return True if resp.get('returncode') == 0 else False
