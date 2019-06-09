@@ -12,9 +12,13 @@ PDFTOTEXT_SCRIPT = os.environ.get('PDFTOTXT_SCRIPT')
 
 PROCESS_TXT_SCRIPT = os.environ.get('PROCESSTXT_SCRIPT')
 
+REDIS_HOST_NAME = os.environ.get('REDIS_HOST_NAME')
+
 DEFAULT_DPI = 300
 
 TMP_FOLDER = os.environ.get('TMP_FOLDER')
+
+UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER')
 
 LANGUAGE = 'eng'
 
@@ -38,8 +42,6 @@ ALLOWED_CONTENT_TYPES = [
     'text/plain',
 ]
 
-
 DEFAULT_ENCODING = 'utf8'
 
-UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER')
 
