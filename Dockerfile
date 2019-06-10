@@ -1,4 +1,4 @@
-# this should be ran using python:3.6
+# this should be ran using python:3.7
 FROM python:3.7
 
 # Creating a user tu run the process
@@ -8,7 +8,8 @@ RUN groupadd -r extuser && useradd -r -g extuser extuser
 # create data directory
 RUN mkdir -p /data && mkdir /upload \
 	&& chown -R extuser:extuser /data \
-	&& chown -R extuser:extuser /upload
+	&& chown -R extuser:extuser /upload \
+	&& chmod -R 757 /upload
 
 ENV UPLOAD_FOLDER '/upload'
 
@@ -17,14 +18,16 @@ ENV TMP_FOLDER '/tmp'
 
 # install tesseract
 RUN apt-get update && \
-	apt-get -y install \
-	tesseract-ocr-all \
-	poppler-utils \
-	imagemagick \
-	sed \
-	&& apt-get clean
+ 	apt-get -y install \
+# 	tesseract-ocr-all \
+# 	poppler-utils \
+# 	imagemagick \
+ 	sed \
+ 	&& apt-get clean
+
 
 VOLUME /data
+VOLUME /upload
 
 # setting up the environment variables for the rmxbot configuration file
 ENV RMXBOT_ENDPOINT 'http://localhost:8000'

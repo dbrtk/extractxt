@@ -24,16 +24,12 @@ def extract_from_pdf(file_path: str = None, unique_id: str = None,
             LANGUAGE,
             PDFTOTEXT_FILE_PREFIX
         )),
-        stdin=subprocess.PIPE,
-        stdout=subprocess.PIPE,
         encoding="utf-8",
-        # capture_output=True,
+        capture_output=True,
         check=True,
     )
     return {
         'stdout': results.stdout,
         'returncode': results.returncode,
         'file_path': os.path.join(corpus_files_path, unique_id),
-        # 'tmp_path': tmp_path,
-        # 'file_path': os.path.join(tmp_path, '{}.txt'.format(unique_id))
     }
