@@ -28,6 +28,8 @@ def extract_from_pdf(file_path: str = None, unique_id: str = None,
         capture_output=True,
         check=True,
     )
+    # if results.stderr:
+    #     raise RuntimeError(results.stderr)
     return {
         'stdout': results.stdout,
         'returncode': results.returncode,
