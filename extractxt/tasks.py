@@ -1,17 +1,10 @@
 import os
 
 from .app import celery
-from .config.appconf import DEFAULT_ENCODING
+from .config.appconf import CONTENT_TYPES, DEFAULT_ENCODING
 from .config.celeryconf import RMXBOT_TASKS
-from .frompdf import extract_from_pdf
 from .fromtxt import process_text
 from .utils import get_encoding
-
-
-CONTENT_TYPES = {
-    'pdf': 'application/pdf',
-    'txt': 'text/plain',
-}
 
 
 @celery.task
@@ -38,9 +31,7 @@ def extract_from_file(corpusid: str = None,
         'unique_id': unique_id,
         'corpus_files_path': corpus_files_path,
     }
-    if content_type == CONTENT_TYPES.get('pdf'):
-        resp = extract_from_pdf(**kwds)
-    elif content_type == CONTENT_TYPES.get('txt'):
+    if content_type == CONTENT_TYPES.get('txt'):
         resp = process_text(**kwds)
     else:
         raise TypeError(content_type)

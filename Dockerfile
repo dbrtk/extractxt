@@ -6,9 +6,6 @@ RUN groupadd -r extuser && useradd -r -g extuser extuser
 
 # installing system deps.
 RUN apt-get update && apt-get install -y  \
-  	tesseract-ocr-all \
-  	poppler-utils \
-  	imagemagick \
     sed \
     && apt-get clean
 
@@ -44,7 +41,6 @@ RUN chown -R extuser:extuser /opt/extractxt \
     && chmod 757 /opt/extractxt \
     && chmod +x /opt/extractxt/*.sh
 
-ENV PDFTOTXT_SCRIPT /opt/extractxt/pdftotext.sh
 ENV PROCESSTXT_SCRIPT /opt/extractxt/processtxt.sh
 
 

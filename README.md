@@ -1,2 +1,2 @@
 # extractxt
-Extracting text from pdf and other file types.
+Extracting text from plain txt files types.

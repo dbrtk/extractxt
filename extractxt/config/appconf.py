@@ -5,8 +5,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 BIN_PATH = os.path.join(os.path.dirname(BASE_DIR), 'bin')
 
-PDFTOTEXT_SCRIPT = os.environ.get('PDFTOTXT_SCRIPT')
-
 PROCESS_TXT_SCRIPT = os.environ.get('PROCESSTXT_SCRIPT')
 
 REDIS_HOST_NAME = os.environ.get('REDIS_HOST_NAME')
@@ -35,10 +33,14 @@ CORPUS_STATUS = {
 
 
 ALLOWED_CONTENT_TYPES = [
-    'application/pdf',
+
     'text/plain',
 ]
 
 DEFAULT_ENCODING = 'utf8'
 
+CONTENT_TYPES = {
+
+    'txt': 'text/plain',
+}
 
