@@ -11,15 +11,15 @@ RUN apt-get update && apt-get install -y  \
 
 
 # create data directory
-RUN mkdir -p /data /upload /extmp \
-	&& chown -R extuser:extuser /data \
+RUN mkdir -p /upload /extmp \
+#	&& chown -R extuser:extuser /data \
 	&& chown -R extuser:extuser /upload \
 	&& chown -R extuser:extuser /extmp \
 	&& chmod -R 757 /upload \
 	&& chmod -R 757 /extmp
 
 
-VOLUME /data
+# VOLUME /data
 VOLUME /upload
 
 
