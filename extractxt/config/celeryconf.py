@@ -21,11 +21,11 @@ CELERY_ROUTES = {
 
 RMXBOT_TASKS = {
 
-    'expected_files': 'rmxbot.tasks.corpus.expected_files',
+    'expected_files': 'rmxbot.tasks.container.expected_files',
 
-    'create': 'rmxbot.tasks.corpus.create_from_upload',
+    'create': 'rmxbot.tasks.container.create_from_upload',
 
-    'file_extract_callback': 'rmxbot.tasks.corpus.file_extract_callback',
+    'file_extract_callback': 'rmxbot.tasks.container.file_extract_callback',
 
     'create_data_from_file': 'rmxbot.tasks.data.create',
 

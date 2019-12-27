@@ -38,7 +38,7 @@ ENV UPLOAD_FOLDER '/upload'
 ENV TMP_FOLDER '/extmp'
 
 # setting up the environment variables for the rmxbot configuration file
-ENV RMXBOT_ENDPOINT 'http://localhost:8000'
+ENV RMXBOT_ENDPOINT 'http://localhost'
 
 # the redis host
 ENV REDIS_HOST_NAME 'redis'
