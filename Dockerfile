@@ -1,5 +1,5 @@
 # this should be ran using python:3.7
-FROM python:3.7
+FROM python:3.8
 
 # installing system deps.
 RUN apt-get update && apt-get install -y sed \
