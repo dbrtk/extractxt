@@ -24,7 +24,7 @@ PDFTOTEXT_FILE_PREFIX = 'file'
 # rmxbot
 RMXBOT_ENDPOINT = os.environ.get('RMXBOT_ENDPOINT')
 
-CORPUS_ENDPOINT = '{}/corpus/'.format(RMXBOT_ENDPOINT)
+CORPUS_ENDPOINT = '{}/container/'.format(RMXBOT_ENDPOINT)
 
 CORPUS_STATUS = {
     'new': 'newly-created',
