@@ -41,7 +41,7 @@ ENV TMP_FOLDER '/extmp'
 ENV RMXBOT_ENDPOINT 'http://localhost'
 
 # the redis host
-ENV REDIS_HOST_NAME 'redis'
+ENV BROKER_HOST_NAME 'rabbitmq'
 
 # Make port 8003 available to the world outside this container
 EXPOSE 8003

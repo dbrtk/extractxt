@@ -7,7 +7,7 @@ BIN_PATH = os.path.join(os.path.dirname(BASE_DIR), 'bin')
 
 PROCESS_TXT_SCRIPT = os.environ.get('PROCESSTXT_SCRIPT')
 
-REDIS_HOST_NAME = os.environ.get('REDIS_HOST_NAME')
+BROKER_HOST_NAME = os.environ.get('BROKER_HOST_NAME')
 
 DEFAULT_DPI = 300
 
