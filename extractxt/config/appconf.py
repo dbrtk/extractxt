@@ -44,3 +44,5 @@ CONTENT_TYPES = {
     'txt': 'text/plain',
 }
 
+# celery, redis (auth access) configuration
+REDIS_PASS = os.environ.get('REDIS_PASS')
