@@ -1,3 +1,3 @@
 #!/bin/sh
 
-celery worker -A celery_worker --loglevel=info -Q extractxt
+celery -A celery_worker worker --loglevel=INFO -Q extractxt
