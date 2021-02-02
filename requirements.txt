@@ -1,10 +1,7 @@
-
 celery
-redis
 
 chardet
 
 flask
 
 requests
-
